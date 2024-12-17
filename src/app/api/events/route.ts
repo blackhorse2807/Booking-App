@@ -132,7 +132,7 @@ const events = [
       "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/19.jpg"
     },
   ];
-  export async function GET(request:any) {
+  export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
     if (id) {
