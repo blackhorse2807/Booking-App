@@ -2,20 +2,20 @@
 import { useEffect, useState } from "react";
 import { FiArrowLeft, FiMoreVertical } from "react-icons/fi";
 //import { FaUserFriends, FaCalendarAlt, FaClock, FaTable } from "react-icons/fa";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+// import { useSession } from "next-auth/react";
+// import { useRouter } from "next/navigation";
 
 const PlaceOrder = () => {
 
 
-  const { data: session, status } = useSession();
-  const router = useRouter();
+  // const { data: session, status } = useSession();
+  // const router = useRouter();
 
-  useEffect(() => {
-      if (status === "unauthenticated") {
-        router.push("/");
-      }
-    }, [status, router]);
+  // useEffect(() => {
+  //     if (status === "unauthenticated") {
+  //       router.push("/");
+  //     }
+  //   }, [status, router]);
 
   const [selectedDate, setSelectedDate] = useState("12");
   const [selectedTimeFrom, setSelectedTimeFrom] = useState("12:00");
