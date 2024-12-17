@@ -4,7 +4,7 @@ import "dotenv/config";
 
 const client = twilio(process.env.TWILIO_ACCOUNT_SID as string, process.env.TWILIO_AUTH_TOKEN as string);
 
-let otpStore: { [key: string]: { otp: string; expiresAt: number } } = {}; // Temporary OTP store
+const otpStore: { [key: string]: { otp: string; expiresAt: number } } = {}; // Temporary OTP store
 
 export async function POST(req: NextRequest) {
   const { phone } = await req.json();
