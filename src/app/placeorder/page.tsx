@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { FiArrowLeft, FiMoreVertical } from "react-icons/fi";
-import { FaUserFriends, FaCalendarAlt, FaClock, FaTable } from "react-icons/fa";
+//import { FaUserFriends, FaCalendarAlt, FaClock, FaTable } from "react-icons/fa";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
