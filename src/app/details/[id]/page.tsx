@@ -4,20 +4,20 @@ import { useEffect, useState } from "react";
 import { FiMapPin, FiCalendar, FiStar, FiChevronLeft } from "react-icons/fi";
 import Link from "next/link";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+// import { useSession } from "next-auth/react";
+// import { useRouter } from "next/navigation";
 
 const DetailsPage = () => {
   
-  const { data: session, status } = useSession();
-  const router = useRouter();
+  // const { data: session, status } = useSession();
+  // const router = useRouter();
   
   
-  useEffect(() => {
-      if (status === "unauthenticated") {
-        router.push("/");
-      }
-    }, [status, router]);
+  // useEffect(() => {
+  //     if (status === "unauthenticated") {
+  //       router.push("/");
+  //     }
+  //   }, [status, router]);
   const { id } = useParams();
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
