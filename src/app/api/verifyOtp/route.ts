@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-let otpStore: { [key: string]: { otp: string; expiresAt: number } } = {}; // Shared OTP store
+const otpStore: { [key: string]: { otp: string; expiresAt: number } } = {};
 
 export async function POST(req: NextRequest) {
   const { phone, otp } = await req.json();
