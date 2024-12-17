@@ -21,7 +21,7 @@ const DetailsPage = () => {
   const { id } = useParams();
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<boolean>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
