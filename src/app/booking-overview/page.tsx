@@ -1,22 +1,23 @@
 "use client";
+
 import { useSearchParams } from "next/navigation";
 import { QRCodeCanvas } from "qrcode.react";
 import { useSession } from "next-auth/react";
 import jsPDF from "jspdf";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 
-const BookingOverview = () => {
+const BookingOverviewPage = () => {
   const searchParams = useSearchParams();
   const { data: session, status } = useSession();
   const router = useRouter();
 
-
   useEffect(() => {
-      if (status === "unauthenticated") {
-        router.push("/");
-      }
-    }, [status, router]);
+    if (status === "unauthenticated") {
+      router.push("/");
+    }
+  }, [status, router]);
+
   // Extract user name from session or fallback
   const customerName =
     session?.user?.name || searchParams.get("name") || "Customer";
@@ -55,59 +56,69 @@ const BookingOverview = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 py-8">
-      <div className="max-w-4xl w-full bg-white shadow-lg rounded-lg p-8">
-        <div className="text-center mb-6">
-          <h1 className="text-3xl font-bold text-gray-800">Booking Overview</h1>
-        </div>
+    <Suspense fallback={<div>Loading booking overview...</div>}>
+      <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 py-8">
+        <div className="max-w-4xl w-full bg-white shadow-lg rounded-lg p-8">
+          <div className="text-center mb-6">
+            <h1 className="text-3xl font-bold text-gray-800">Booking Overview</h1>
+          </div>
 
-        {/* Display Booking Details */}
-        <div className="grid grid-cols-2 gap-6 mb-8">
-          <div className="text-gray-600">
-            <p className="font-semibold text-gray-800">Customer Name</p>
-            <p>{customerName}</p>
+          {/* Display Booking Details */}
+          <div className="grid grid-cols-2 gap-6 mb-8">
+            <div className="text-gray-600">
+              <p className="font-semibold text-gray-800">Customer Name</p>
+              <p>{customerName}</p>
+            </div>
+            <div className="text-gray-600">
+              <p className="font-semibold text-gray-800">Order ID</p>
+              <p>{orderId}</p>
+            </div>
+            <div className="text-gray-600">
+              <p className="font-semibold text-gray-800">Table</p>
+              <p>{table}</p>
+            </div>
+            <div className="text-gray-600">
+              <p className="font-semibold text-gray-800">Time</p>
+              <p>{time}</p>
+            </div>
+            <div className="text-gray-600">
+              <p className="font-semibold text-gray-800">Date</p>
+              <p>{date}</p>
+            </div>
           </div>
-          <div className="text-gray-600">
-            <p className="font-semibold text-gray-800">Order ID</p>
-            <p>{orderId}</p>
-          </div>
-          <div className="text-gray-600">
-            <p className="font-semibold text-gray-800">Table</p>
-            <p>{table}</p>
-          </div>
-          <div className="text-gray-600">
-            <p className="font-semibold text-gray-800">Time</p>
-            <p>{time}</p>
-          </div>
-          <div className="text-gray-600">
-            <p className="font-semibold text-gray-800">Date</p>
-            <p>{date}</p>
-          </div>
-        </div>
 
-        {/* Display QR Code */}
-        <div className="flex justify-center mb-8">
-          <QRCodeCanvas id="qr-code" value={qrData} size={150} />
-        </div>
+          {/* Display QR Code */}
+          <div className="flex justify-center mb-8">
+            <QRCodeCanvas id="qr-code" value={qrData} size={150} />
+          </div>
 
-        {/* Buttons */}
-        <div className="flex flex-col space-y-4 items-center">
-          <button
-            onClick={handleDownloadReceipt}
-            className="w-full bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition"
-          >
-            Download Receipt
-          </button>
-          <button
-            onClick={() => router.push("/home")}
-            className="w-full bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition"
-          >
-            Back to Home
-          </button>
+          {/* Buttons */}
+          <div className="flex flex-col space-y-4 items-center">
+            <button
+              onClick={handleDownloadReceipt}
+              className="w-full bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition"
+            >
+              Download Receipt
+            </button>
+            <button
+              onClick={() => router.push("/home")}
+              className="w-full bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition"
+            >
+              Back to Home
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </Suspense>
   );
 };
 
-export default BookingOverview;
+// export default BookingOverview;
+
+export default function BookingOverview() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <BookingOverviewPage />
+    </Suspense>
+  );
+}

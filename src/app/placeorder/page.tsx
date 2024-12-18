@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FiArrowLeft, FiMoreVertical } from "react-icons/fi";
 //import { FaUserFriends, FaCalendarAlt, FaClock, FaTable } from "react-icons/fa";
 // import { useSession } from "next-auth/react";
@@ -18,24 +18,24 @@ const PlaceOrder = () => {
   //   }, [status, router]);
 
   const [selectedDate, setSelectedDate] = useState("12");
-  const [selectedTimeFrom, setSelectedTimeFrom] = useState("12:00");
-  const [selectedTimeTo, setSelectedTimeTo] = useState("13:00");
+  const selectedTimeFrom = useState("12:00");
+  const selectedTimeTo = useState("13:00");
   const [quantities, setQuantities] = useState({
     nonAlcoholic: 20,
     premiumPackage: 20,
     champagnePackage: 20,
   });
 
-  const timeOptions = [
-    "11:00", "12:00", "13:00", "14:00", "15:00",
-    "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00",
-  ];
+  // const timeOptions = [
+  //   "11:00", "12:00", "13:00", "14:00", "15:00",
+  //   "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00",
+  // ];
 
-  const handleTimeFromChange = (time: string) => {
-    setSelectedTimeFrom(time);
-    const index = timeOptions.indexOf(time);
-    setSelectedTimeTo(timeOptions[index + 1] || timeOptions[timeOptions.length - 1]);
-  };
+  // const handleTimeFromChange = (time: string) => {
+  //   setSelectedTimeFrom(time);
+  //   const index = timeOptions.indexOf(time);
+  //   setSelectedTimeTo(timeOptions[index + 1] || timeOptions[timeOptions.length - 1]);
+  // };
 
   const handleQuantityChange = (
     packageType: keyof typeof quantities,

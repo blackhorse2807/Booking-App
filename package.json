@@ -16,7 +16,7 @@
     "jsonwebtoken": "^9.0.2",
     "jspdf": "^2.5.2",
     "mongoose": "^8.9.0",
-    "next": "15.1.0",
+    "next": "^15.1.0",
     "next-auth": "^4.24.11",
     "nodemailer": "^6.9.16",
     "qrcode.react": "^4.2.0",

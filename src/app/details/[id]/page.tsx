@@ -6,6 +6,20 @@ import Link from "next/link";
 import Image from "next/image";
 // import { useSession } from "next-auth/react";
 // import { useRouter } from "next/navigation";
+interface EventDetails {
+  id: number;
+  name?: string;
+  event_name?: string;
+  image_link?: string;
+  rating?: number;
+  number_of_reviews?: number;
+  location?: string;
+  address?: string;
+  time_slot?: string;
+  information?: string;
+  additional_info?: string;
+  maps_link?: string;
+}
 
 const DetailsPage = () => {
   
@@ -21,7 +35,7 @@ const DetailsPage = () => {
   const { id } = useParams();
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
-  const [data, setData] = useState<boolean>(null);
+  const [data, setData] = useState<EventDetails | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -30,7 +44,7 @@ const DetailsPage = () => {
         const url = type === "event" ? `/api/events?id=${id}` : `/api/venues?id=${id}`;
         const response = await fetch(url);
         if (!response.ok) throw new Error("Failed to fetch data");
-        const result = await response.json();
+        const result: EventDetails = await response.json();
         setData(result);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -64,12 +78,12 @@ const DetailsPage = () => {
       <div className="p-4">
         {/* Image */}
         <Image
-          src={data.image_link || "/placeholder.jpg"}
-          alt={data.name || data.event_name}
-          width={800}
-          height={300}
-          className="w-full h-[180px] object-cover rounded-lg"
-        />
+  src={data.image_link || "/placeholder.jpg"}
+  alt={data.name || data.event_name || "No name available"} // Provide a fallback string
+  width={800}
+  height={300}
+  className="w-full h-[180px] object-cover rounded-lg"
+/>
 
         {/* Title */}
         <h2 className="text-2xl font-bold mt-4 uppercase">{data.name || data.event_name}</h2>
