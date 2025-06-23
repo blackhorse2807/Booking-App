@@ -1,21 +1,20 @@
 "use client";
+import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect } from "react";
+import { FiUser, FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
-import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 
-const LoginPage = () => {
+const Signup = () => {
   const router = useRouter();
   const { status } = useSession();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
+  const [user, setUser] = useState({ name: "", email: "", password: "" });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   // Redirect if already authenticated
   useEffect(() => {
@@ -24,33 +23,48 @@ const LoginPage = () => {
     }
   }, [status, router]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const onSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    setLoading(true);
-
-    if (!formData.email || !formData.password) {
-      setError("Email and password are required");
-      setLoading(false);
+    
+    if (!user.name || !user.email || !user.password) {
+      setError("All fields are required");
       return;
     }
-
+    
     try {
-      // Use the credentials provider we configured in NextAuth
+      setLoading(true);
+      
+      // Create user in Firebase
+      const res = await createUserWithEmailAndPassword(auth, user.email, user.password);
+      
+      // Update the user profile with the name
+      if (user.name) {
+        await updateProfile(res.user, {
+          displayName: user.name
+        });
+      }
+      
+      console.log("User created:", res.user);
+      
+      // Sign in with credentials after successful signup
       const result = await signIn("credentials", {
-        email: formData.email,
-        password: formData.password,
-        redirect: false,
+        email: user.email,
+        password: user.password,
+        redirect: false
       });
-
+      
       if (result?.error) {
         setError(result.error);
-      } else if (result?.ok) {
+      } else {
         router.push("/home");
       }
-    } catch (error) {
-      console.error("Login error:", error);
-      setError("An error occurred. Please try again.");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Signup failed. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -87,27 +101,51 @@ const LoginPage = () => {
           className="mx-auto h-12 w-auto"
         />
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Welcome back
+          Create your account
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
-          Don&apos;t have an account?{" "}
+          Already have an account?{" "}
           <Link
-            href="/signup"
+            href="/login"
             className="font-medium text-orange-500 hover:text-orange-600"
           >
-            Sign up
+            Sign in
           </Link>
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow-md sm:rounded-lg sm:px-10">
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          <form className="space-y-6" onSubmit={onSignup}>
             {error && (
               <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
                 {error}
               </div>
             )}
+
+            <div>
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Full Name
+              </label>
+              <div className="mt-1 relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <FiUser className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  required
+                  value={user.name}
+                  onChange={(e) => setUser({ ...user, name: e.target.value })}
+                  className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                  placeholder="Enter your full name"
+                />
+              </div>
+            </div>
 
             <div>
               <label
@@ -126,10 +164,8 @@ const LoginPage = () => {
                   type="email"
                   autoComplete="email"
                   required
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
+                  value={user.email}
+                  onChange={(e) => setUser({ ...user, email: e.target.value })}
                   className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
                   placeholder="Enter your email"
                 />
@@ -151,14 +187,12 @@ const LoginPage = () => {
                   id="password"
                   name="password"
                   type={showPassword ? "text" : "password"}
-                  autoComplete="current-password"
+                  autoComplete="new-password"
                   required
-                  value={formData.password}
-                  onChange={(e) =>
-                    setFormData({ ...formData, password: e.target.value })
-                  }
+                  value={user.password}
+                  onChange={(e) => setUser({ ...user, password: e.target.value })}
                   className="appearance-none block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                  placeholder="Enter your password"
+                  placeholder="Create a password"
                 />
                 <button
                   type="button"
@@ -183,7 +217,7 @@ const LoginPage = () => {
                 {loading ? (
                   <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                 ) : (
-                  "Sign in"
+                  "Create account"
                 )}
               </button>
             </div>
@@ -214,7 +248,7 @@ const LoginPage = () => {
                   height={20}
                   className="mr-2"
                 />
-                Sign in with Google
+                Sign up with Google
               </button>
             </div>
           </div>
@@ -224,4 +258,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage; 
+export default Signup;
