@@ -4,10 +4,11 @@ import { QRCodeCanvas } from "qrcode.react";
 import { useSession } from "next-auth/react";
 import jsPDF from "jspdf";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { FiDownload, FiHome, FiCalendar, FiClock, FiUser, FiHash, FiCheck } from "react-icons/fi";
 
-const BookingOverview = () => {
+// Separate the main content into a client component
+const BookingContent = () => {
   const searchParams = useSearchParams();
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -189,6 +190,22 @@ const BookingOverview = () => {
         </div>
       )}
     </div>
+  );
+};
+
+// Loading component
+const LoadingState = () => (
+  <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
+  </div>
+);
+
+// Main component with Suspense boundary
+const BookingOverview = () => {
+  return (
+    <Suspense fallback={<LoadingState />}>
+      <BookingContent />
+    </Suspense>
   );
 };
 

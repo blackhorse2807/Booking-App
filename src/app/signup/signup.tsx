@@ -17,10 +17,12 @@ const Signup = () => {
       console.log("User created:", res.user);
       alert("Signup successful!");
       window.location.href = "/home";
-    } catch (error: any) {
-      alert(error.message || "Signup failed");
-    } finally {
-      setLoading(false);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("Signup failed");
+      }
     }
   };
 
