@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FiMenu, FiSearch, FiBell, FiMapPin, FiClock, FiStar } from "react-icons/fi";
+import { FiMenu, FiSearch, FiBell, FiMapPin, FiClock, FiStar, FiLogOut } from "react-icons/fi";
 import { FaBell } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 interface Event {
@@ -41,6 +41,11 @@ const LandingPage = () => {
   }, [status, router]);
 
   const toggleBell = () => setIsBellToggled((prev) => !prev);
+
+  const handleLogout = async () => {
+    await signOut({ redirect: false });
+    router.push("/login");
+  };
 
   useEffect(() => {
     async function fetchEvents() {
@@ -95,17 +100,27 @@ const LandingPage = () => {
               <span className="font-semibold text-gray-800">{session?.user?.name}</span>
               <span className="text-2xl">👋</span>
             </div>
-            <button 
-              onClick={toggleBell} 
-              className="p-2 hover:bg-gray-100 rounded-full transition"
-              aria-label="Notifications"
-            >
-              {isBellToggled ? (
-                <FaBell className="w-6 h-6 text-orange-500" />
-              ) : (
-                <FiBell className="w-6 h-6 text-gray-600" />
-              )}
-            </button>
+            <div className="flex items-center space-x-2">
+              <button 
+                onClick={toggleBell} 
+                className="p-2 hover:bg-gray-100 rounded-full transition"
+                aria-label="Notifications"
+              >
+                {isBellToggled ? (
+                  <FaBell className="w-6 h-6 text-orange-500" />
+                ) : (
+                  <FiBell className="w-6 h-6 text-gray-600" />
+                )}
+              </button>
+              <button 
+                onClick={handleLogout}
+                className="p-2 hover:bg-gray-100 rounded-full transition flex items-center text-gray-600 hover:text-red-500"
+                aria-label="Logout"
+              >
+                <FiLogOut className="w-5 h-5" />
+                <span className="ml-1 text-sm font-medium">Logout</span>
+              </button>
+            </div>
           </div>
         </div>
       </header>

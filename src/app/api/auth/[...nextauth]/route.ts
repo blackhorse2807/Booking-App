@@ -37,7 +37,8 @@ const logWithTimestamp = (message: string, data?: unknown) => {
   console.log(`[${timestamp}] ${message}`, data ? data : '');
 };
 
-export const authOptions: NextAuthOptions = {
+// Define the auth options but don't export them
+const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID!,
@@ -155,6 +156,8 @@ export const authOptions: NextAuthOptions = {
   }
 };
 
+// Create the handler with the auth options
 const handler = NextAuth(authOptions);
 
+// Export the handler
 export { handler as GET, handler as POST };
