@@ -1,35 +1,40 @@
 "use client";
-import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
-import { FiUser, FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebase";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
+import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 
-const Signup = () => {
+const LoginPage = () => {
   const router = useRouter();
-  const [user, setUser] = useState({ name: "", email: "", password: "" });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const onSignup = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    
+    setLoading(true);
+
     try {
-      setLoading(true);
-      const res = await createUserWithEmailAndPassword(auth, user.email, user.password);
-      console.log("User created:", res.user);
-      router.push("/home");
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        setError(error.message);
+      const result = await signIn("credentials", {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        setError("Invalid email or password");
       } else {
-        setError("Signup failed. Please try again.");
+        router.push("/home");
       }
+    } catch (error) {
+      setError("An error occurred. Please try again."+ error);
     } finally {
       setLoading(false);
     }
@@ -46,51 +51,27 @@ const Signup = () => {
           className="mx-auto h-12 w-auto"
         />
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Create your account
+          Welcome back
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
-          Already have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link
-            href="/login"
+            href="/signup"
             className="font-medium text-orange-500 hover:text-orange-600"
           >
-            Sign in
+            Sign up
           </Link>
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow-md sm:rounded-lg sm:px-10">
-          <form className="space-y-6" onSubmit={onSignup}>
+          <form className="space-y-6" onSubmit={handleSubmit}>
             {error && (
               <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
                 {error}
               </div>
             )}
-
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Full Name
-              </label>
-              <div className="mt-1 relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FiUser className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  required
-                  value={user.name}
-                  onChange={(e) => setUser({ ...user, name: e.target.value })}
-                  className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                  placeholder="Enter your full name"
-                />
-              </div>
-            </div>
 
             <div>
               <label
@@ -109,8 +90,10 @@ const Signup = () => {
                   type="email"
                   autoComplete="email"
                   required
-                  value={user.email}
-                  onChange={(e) => setUser({ ...user, email: e.target.value })}
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                   className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
                   placeholder="Enter your email"
                 />
@@ -132,12 +115,14 @@ const Signup = () => {
                   id="password"
                   name="password"
                   type={showPassword ? "text" : "password"}
-                  autoComplete="new-password"
+                  autoComplete="current-password"
                   required
-                  value={user.password}
-                  onChange={(e) => setUser({ ...user, password: e.target.value })}
+                  value={formData.password}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
                   className="appearance-none block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                  placeholder="Create a password"
+                  placeholder="Enter your password"
                 />
                 <button
                   type="button"
@@ -162,7 +147,7 @@ const Signup = () => {
                 {loading ? (
                   <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                 ) : (
-                  "Create account"
+                  "Sign in"
                 )}
               </button>
             </div>
@@ -192,7 +177,7 @@ const Signup = () => {
                   height={20}
                   className="mr-2"
                 />
-                Sign up with Google
+                Sign in with Google
               </button>
             </div>
           </div>
@@ -202,4 +187,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default LoginPage; 
