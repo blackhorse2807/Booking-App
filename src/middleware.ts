@@ -1,15 +1,38 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
 
-export async function middleware(req: any) {
-  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+export async function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
 
-  if (!token && req.nextUrl.pathname.startsWith("/home")) {
-    return NextResponse.redirect(new URL("/login", req.url));
+  // Skip middleware for NextAuth routes and static files
+  if (
+    pathname.startsWith("/api/auth") || 
+    pathname.startsWith("/") ||
+    pathname === "/" ||
+    pathname.startsWith("/_next") || 
+    pathname.startsWith("/favicon.ico")
+  ) {
+    return NextResponse.next();
+  }
+
+  // Check for authentication token
+  const token = await getToken({
+    req,
+    secret: "YQrhB4iVXsWkfYmdkCFq80JKEmPOfeN0JCipfa9DFMg=", // Use your secure secret
+  });
+
+  console.log("Middleware Token:", token); 
+
+  const protectedRoutes = ["/placeorder", "/booking-overview"];
+  const dynamicRoutePattern = /^\/details\/\d+$/;
+
+
+  if (!token && (protectedRoutes.some(route => pathname.startsWith(route)) || dynamicRoutePattern.test(pathname))) {
+    return NextResponse.redirect(new URL("/", req.url));
   }
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/home"], // Protect the home route
-};
+    matcher: ["/home", "/placeorder", "/booking-overview", "/details/:id*"], 
+  };

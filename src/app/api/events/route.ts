@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const events = [
     {
@@ -116,7 +116,7 @@ const events = [
       "address": "Pier 7, Dubai Marina",
       "maps_link": "https://www.google.com/maps/place/Atelier+M/@25.0762468,55.1363481,899m/data=!3m3!1e3!4b1!5s0x3e5f6cab2893a281:0xa193d005d6c237e4!4m6!3m5!1s0x3e5f6caae908e705:0xba86396d7a4d84e9!8m2!3d25.0762468!4d55.138923!16s%2Fg%2F11b7tgygys?entry=ttu&g_ep=EgoyMDI0MTIxMS4wIKXMDSoASAFQAw%3D%3D",
       "status": "upcoming",
-      "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/18.jpg"
+      "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/21.jpg"
     },
     {
       "id":10,
@@ -132,12 +132,11 @@ const events = [
       "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/19.jpg"
     },
   ];
-  export async function GET(request:any) {
+  export async function GET(request :NextRequest) {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
     if (id) {
       const event = events.find((e) => e.id === parseInt(id));
-      console.log(event)
       return NextResponse.json(event || { error: "Event not found" });
     }
   

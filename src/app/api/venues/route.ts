@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const venues = [
   {
@@ -35,7 +35,7 @@ const venues = [
     "number_of_reviews": "543",
     "venue_type": "Spa",
     "address": "Shangri-La Hotel, Sheikh Zayed Rd - Dubai",
-    "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/21.jpg",
+    "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/16.jpg",
 },
 {
     "id" : 4,
@@ -59,7 +59,7 @@ const venues = [
     "number_of_reviews": "1,325",
     "venue_type": "Golf Club",
     "address": "Port Saeed - Dubai",
-    "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/22.jpg",
+    "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/16.jpg",
 },
 {
     "id" : 6,
@@ -71,7 +71,7 @@ const venues = [
     "number_of_reviews": "500",
     "venue_type": "Sports Complex",
     "address": "Dubai - United Arab Emirates",
-    "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/23.jpg",
+    "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/19.jpg",
 },
 {
     "id" : 7,
@@ -83,7 +83,7 @@ const venues = [
     "number_of_reviews": "12,187",
     "venue_type": "Hotel",
     "address": "Grand Hyatt Dubai - 11 Sheikh Rashid Rd - Dubai",
-    "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/2.jpg",
+    "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/1.jpg",
 },
 {
     "id" : 8,
@@ -95,7 +95,7 @@ const venues = [
     "number_of_reviews": "2,153",
     "venue_type": "Hotel",
     "address": "Al Habtoor City - Sheikh Zayed Rd - Dubai",
-    "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/3.jpg",
+    "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/19.jpg",
 },
 {
     "id" : 9,
@@ -107,10 +107,10 @@ const venues = [
     "number_of_reviews": "5,500",
     "venue_type": "Hotel",
     "address": "Jebel Ali Beach - Dubai",
-    "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/4.jpg",
+    "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/17.jpg",
 },
 ];
- export async function GET(request:any) {
+ export async function GET(request:NextRequest) {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
     if (id) {

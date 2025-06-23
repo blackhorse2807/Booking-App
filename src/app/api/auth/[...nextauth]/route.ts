@@ -1,18 +1,25 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import "dotenv/config";
-const authOptions = {
+
+const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID as string,
-      clientSecret: process.env.GOOGLE_SECRET as string,
+      clientId: "615855067853-o2munji5dar7d1osjtev3fc0mfolmgpq.apps.googleusercontent.com",
+      clientSecret: "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",
     }),
   ],
   callbacks: {
     async redirect({ url, baseUrl }) {
-      return baseUrl + "/home"; // Redirect users to /home
+      // Prioritize callbackUrl
+      if (url.startsWith(baseUrl)) {
+        return url;
+      }
+      return `${baseUrl}/home`; // Default to /home
     },
   },
+  
+  
 };
 
 const handler = NextAuth(authOptions);

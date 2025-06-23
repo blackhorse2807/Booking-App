@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FiMenu, FiSearch, FiBell, FiCalendar, FiMapPin } from "react-icons/fi";
+import { FiMenu, FiSearch, FiBell, FiCalendar, FiMapPin, FiClock, FiStar } from "react-icons/fi";
 import { FaBell } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,6 +13,7 @@ interface Event {
   event_name: string;
   time_slot: string;
   image_link: string;
+  status: string;
 }
 
 interface Venue {
@@ -25,25 +26,22 @@ interface Venue {
 }
 
 const LandingPage = () => {
-  // Hooks are defined unconditionally
   const { data: session, status } = useSession();
   const router = useRouter();
 
   const [events, setEvents] = useState<Event[]>([]);
   const [venues, setVenues] = useState<Venue[]>([]);
   const [isBellToggled, setIsBellToggled] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  // Redirect if unauthenticated
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/");
     }
   }, [status, router]);
 
-  // Toggle Notification Bell
   const toggleBell = () => setIsBellToggled((prev) => !prev);
 
-  // Fetch Upcoming Events
   useEffect(() => {
     async function fetchEvents() {
       try {
@@ -57,7 +55,6 @@ const LandingPage = () => {
     fetchEvents();
   }, []);
 
-  // Fetch Venues
   useEffect(() => {
     async function fetchVenues() {
       try {
@@ -71,142 +68,142 @@ const LandingPage = () => {
     fetchVenues();
   }, []);
 
-  // Handle loading state
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
+      </div>
+    );
   }
 
+  const filteredVenues = venues.filter(venue =>
+    venue.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    venue.location.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
-    <div className="bg-white min-h-screen text-gray-800">
+    <div className="bg-gray-50 min-h-screen text-gray-800">
       {/* Header */}
-      <h1 className="flex items-center justify-between px-4 py-3 border-b">
-        <FiMenu className="w-6 h-6 text-gray-600" />
-        <p className="text-xs font-medium text-gray-500">
-          Welcome aboard, <span className="text-black font-semibold">{session?.user?.name}</span> 👋
-        </p>
-        <button onClick={toggleBell} aria-label="Toggle Bell">
-          {isBellToggled ? (
-            <FaBell className="w-6 h-6 text-orange-500" />
-          ) : (
-            <FiBell className="w-6 h-6 text-gray-600" />
-          )}
-        </button>
-      </h1>
-
-      {/* Search Section */}
-      <div className="px-4 py-4">
-        <h2 className="text-sm font-semibold leading-tight">
-          Choose your favourite venue or find events and confirm your spot!
-        </h2>
-        <div className="relative mt-3">
-          <FiSearch className="absolute left-3 top-2 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Search venue or events"
-            className="w-full pl-10 py-2 bg-gray-100 border border-gray-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-orange-500"
-          />
+      <header className="bg-white shadow-sm sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-between px-4 py-4">
+            <button className="p-2 hover:bg-gray-100 rounded-full transition">
+              <FiMenu className="w-6 h-6 text-gray-600" />
+            </button>
+            <div className="flex items-center space-x-2">
+              <span className="text-sm text-gray-600">Welcome,</span>
+              <span className="font-semibold text-gray-800">{session?.user?.name}</span>
+              <span className="text-2xl">👋</span>
+            </div>
+            <button 
+              onClick={toggleBell} 
+              className="p-2 hover:bg-gray-100 rounded-full transition"
+              aria-label="Notifications"
+            >
+              {isBellToggled ? (
+                <FaBell className="w-6 h-6 text-orange-500" />
+              ) : (
+                <FiBell className="w-6 h-6 text-gray-600" />
+              )}
+            </button>
+          </div>
         </div>
-      </div>
+      </header>
 
-      {/* Upcoming Events */}
-      <section className="px-4 mt-4">
-        <div className="flex justify-between items-center mb-1">
-          <h3 className="text-sm font-semibold">Upcoming Events</h3>
-          <Link href="#" className="text-orange-500 text-xs hover:underline">
-            View All
-          </Link>
+      <main className="max-w-7xl mx-auto px-4 py-6">
+        {/* Search Section */}
+        <div className="mb-8">
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            Find Your Perfect Venue
+          </h1>
+          <p className="text-gray-600 mb-4">
+            Discover amazing venues and events near you
+          </p>
+          <div className="relative">
+            <FiSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <input
+              type="text"
+              placeholder="Search venues, events, or locations..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition"
+            />
+          </div>
         </div>
-        <div className="flex gap-4 overflow-x-auto">
-          {events.map((event) => (
-            <Link key={event.id} href={`/details/${event.id}?type=event`} className="min-w-[140px] block">
-              <div className="bg-white shadow rounded-lg overflow-hidden">
-                <Image
-                  src={event.image_link}
-                  alt={event.event_name}
-                  width={140}
-                  height={80}
-                  className="w-full h-[80px] object-cover"
-                />
-                <div className="p-2">
-                  <h4 className="text-xs font-medium truncate">{event.event_name}</h4>
-                  <div className="flex items-center text-[10px] text-gray-500 mt-1">
-                    <FiCalendar className="mr-1" />
-                    {event.time_slot}
+
+        {/* Upcoming Events */}
+        <section className="mb-8">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-bold text-gray-900">Upcoming Events</h2>
+            <Link href="#" className="text-orange-500 font-medium hover:text-orange-600 transition">
+              View All
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {events.map((event) => (
+              <Link key={event.id} href={`/details/${event.id}?type=event`}>
+                <div className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition group">
+                  <div className="relative">
+                    <Image
+                      src={event.image_link}
+                      alt={event.event_name}
+                      width={400}
+                      height={200}
+                      className="w-full h-48 object-cover group-hover:scale-105 transition duration-300"
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+                      <h3 className="text-white font-semibold text-lg">{event.event_name}</h3>
+                      <div className="flex items-center text-white/90 text-sm mt-1">
+                        <FiClock className="mr-2" />
+                        {event.time_slot}
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* Nearby Section */}
-      <section className="px-4 mt-5">
-  <div className="flex justify-between items-center mb-2">
-    <h3 className="text-sm font-semibold">Nearby</h3>
-  </div>
-  <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-    {venues.map((venue) => (
-      <Link key={venue.id} href={`/details/${venue.id}?type=venue`}>
-        <div className="bg-white shadow rounded-lg overflow-hidden hover:shadow-md transition-all">
-          <Image
-            src={venue.image_link}
-            alt={venue.name}
-            width={180}
-            height={90}
-            className="w-full h-[90px] object-cover"
-          />
-          <div className="p-2">
-            <h4 className="text-xs font-medium truncate">{venue.name}</h4>
-            <div className="flex items-center text-[10px] text-gray-500 mt-1">
-              <FiMapPin className="mr-1 text-orange-500" />
-              {venue.location}
-            </div>
-            <div className="flex mt-1">
-              {Array.from({ length: Math.floor(venue.rating) }).map((_, i) => (
-                <span key={i} className="text-orange-500 text-[10px]">★</span>
-              ))}
-            </div>
+              </Link>
+            ))}
           </div>
-        </div>
-      </Link>
-    ))}
-  </div>
-</section>
+        </section>
 
-      {/* All Section */}
-      <section className="px-4 mt-5 mb-5">
-  <div className="flex justify-between items-center mb-2">
-    <h3 className="text-sm font-semibold">All</h3>
-  </div>
-  <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-    {venues.map((venue) => (
-      <Link key={venue.id} href={`/details/${venue.id}?type=venue`}>
-        <div className="bg-white shadow rounded-lg overflow-hidden hover:shadow-md transition-all">
-          <Image
-            src={venue.image_link}
-            alt={venue.name}
-            width={180}
-            height={90}
-            className="w-full h-[90px] object-cover"
-          />
-          <div className="p-2">
-            <h4 className="text-xs font-medium truncate">{venue.name}</h4>
-            <div className="flex items-center text-[10px] text-gray-500 mt-1">
-              <FiMapPin className="mr-1 text-orange-500" />
-              {venue.location}
-            </div>
-            <div className="flex mt-1">
-              {Array.from({ length: Math.floor(venue.rating) }).map((_, i) => (
-                <span key={i} className="text-orange-500 text-[10px]">★</span>
-              ))}
-            </div>
+        {/* Venues */}
+        <section>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-bold text-gray-900">Popular Venues</h2>
           </div>
-        </div>
-      </Link>
-    ))}
-  </div>
-</section>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredVenues.map((venue) => (
+              <Link key={venue.id} href={`/details/${venue.id}?type=venue`}>
+                <div className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition group">
+                  <div className="relative">
+                    <Image
+                      src={venue.image_link}
+                      alt={venue.name}
+                      width={400}
+                      height={200}
+                      className="w-full h-48 object-cover group-hover:scale-105 transition duration-300"
+                    />
+                    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center">
+                      <FiStar className="text-orange-500 mr-1" />
+                      <span className="font-medium">{venue.rating}</span>
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-semibold text-lg text-gray-900 mb-1">{venue.name}</h3>
+                    <div className="flex items-center text-gray-600">
+                      <FiMapPin className="mr-2 text-orange-500" />
+                      <span className="text-sm">{venue.location}</span>
+                    </div>
+                    <div className="mt-2 flex items-center text-sm text-gray-500">
+                      <span className="text-orange-500 mr-1">{venue.distance}</span>
+                      away
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      </main>
     </div>
   );
 };
