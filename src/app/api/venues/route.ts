@@ -11,7 +11,8 @@ const venues = [
     "number_of_reviews": "312",
     "venue_type": "Nightclub",
     "address": "Armani Hotel Dubai, Burj Khalifa - 1 Sheikh Mohammed bin Rashid Blvd - Dubai",
-    "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/1.jpg"
+    "image_link": "/image/res1.jpeg",
+    "distance": "2.5 km"
   },
   {
     "id" : 2,
@@ -23,7 +24,8 @@ const venues = [
     "number_of_reviews": "156",
     "venue_type": "Bar & Nightclub",
     "address": "Dubai Marine Beach Resort & Spa - Jumeirah St - Dubai",
-    "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/20.jpg",
+    "image_link": "/image/res2.jpeg",
+    "distance": "3.7 km"
 },
 {
     "id" : 3,
@@ -35,7 +37,8 @@ const venues = [
     "number_of_reviews": "543",
     "venue_type": "Spa",
     "address": "Shangri-La Hotel, Sheikh Zayed Rd - Dubai",
-    "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/16.jpg",
+    "image_link": "/image/res3.jpeg",
+    "distance": "1.8 km"
 },
 {
     "id" : 4,
@@ -47,7 +50,8 @@ const venues = [
     "number_of_reviews": "328",
     "venue_type": "Rooftop Bar & Lounge",
     "address": "Dubai Creek Golf & Yacht Club - Port Saeed - Dubai",
-    "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/21.jpg",
+    "image_link": "/image/res4.jpg",
+    "distance": "5.2 km"
 },
 {
     "id" : 5,
@@ -59,7 +63,8 @@ const venues = [
     "number_of_reviews": "1,325",
     "venue_type": "Golf Club",
     "address": "Port Saeed - Dubai",
-    "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/16.jpg",
+    "image_link": "/image/res5.jpeg",
+    "distance": "4.9 km"
 },
 {
     "id" : 6,
@@ -71,7 +76,8 @@ const venues = [
     "number_of_reviews": "500",
     "venue_type": "Sports Complex",
     "address": "Dubai - United Arab Emirates",
-    "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/19.jpg",
+    "image_link": "/image/res6.jpeg",
+    "distance": "7.3 km"
 },
 {
     "id" : 7,
@@ -83,7 +89,8 @@ const venues = [
     "number_of_reviews": "12,187",
     "venue_type": "Hotel",
     "address": "Grand Hyatt Dubai - 11 Sheikh Rashid Rd - Dubai",
-    "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/1.jpg",
+    "image_link": "/image/res7.jpeg",
+    "distance": "3.1 km"
 },
 {
     "id" : 8,
@@ -95,7 +102,8 @@ const venues = [
     "number_of_reviews": "2,153",
     "venue_type": "Hotel",
     "address": "Al Habtoor City - Sheikh Zayed Rd - Dubai",
-    "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/19.jpg",
+    "image_link": "/image/res8.jpeg",
+    "distance": "2.8 km"
 },
 {
     "id" : 9,
@@ -107,7 +115,8 @@ const venues = [
     "number_of_reviews": "5,500",
     "venue_type": "Hotel",
     "address": "Jebel Ali Beach - Dubai",
-    "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/17.jpg",
+    "image_link": "/image/res9.jpeg",
+    "distance": "12.5 km"
 },
 ];
  export async function GET(request:NextRequest) {

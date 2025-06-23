@@ -12,7 +12,7 @@ const events = [
       "address": "Zero Gravity Dubai - King Salman Bin Abdulaziz Al Saud Street, Dubai, UAE",
       "maps_link": "https://www.google.com/maps/place/Zero+Gravity+Dubai/@25.0890189,55.1348254,899m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3e5f14b2cdab2381:0x65be5b0cfdf7dfa!8m2!3d25.0890189!4d55.1374003!16s%2Fg%2F1q5gm0cqg?entry=ttu&g_ep=EgoyMDI0MTIxMS4wIKXMDSoASAFQAw%3D%3D",
       "status": "past",
-      "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/10.jpg"
+      "image_link": "/image/res1.jpeg"
     },
     {
       "id":2,
@@ -25,7 +25,7 @@ const events = [
       "address": "JA The Resort, Soul Beach, Jebel Ali, Dubai",
       "maps_link": "https://www.google.com/maps/place/Soul+Beach+Dubai/@24.9896903,55.0236826,900m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3e5f1195503d3351:0xaa6db24e493a22b8!8m2!3d24.9896903!4d55.0262575!16s%2Fg%2F11sm9wtxsm?entry=ttu&g_ep=EgoyMDI0MTIxMS4wIKXMDSoASAFQAw%3D%3D",
       "status": "upcoming",
-      "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/11.jpg"
+      "image_link": "/image/res2.jpeg"
     },
     {
       "id":3,
@@ -38,7 +38,7 @@ const events = [
       "address": "V Hotel, Dubai",
       "maps_link": "https://www.google.com/maps/place/One1+Dubai/@25.1842241,55.2518501,898m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3e5f69ab08620f67:0x2e34975541fe1796!8m2!3d25.1842241!4d55.254425!16s%2Fg%2F11tnvwl8kv?entry=ttu&g_ep=EgoyMDI0MTIxMS4wIKXMDSoASAFQAw%3D%3D",
       "status": "past",
-      "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/12.jpg"
+      "image_link": "/image/res3.jpeg"
     },
     {
       "id":4,
@@ -51,7 +51,7 @@ const events = [
       "address": "V Hotel, Dubai",
       "maps_link": "https://www.google.com/maps/place/One1+Dubai/@25.1842241,55.2518501,898m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3e5f69ab08620f67:0x2e34975541fe1796!8m2!3d25.1842241!4d55.254425!16s%2Fg%2F11tnvwl8kv?entry=ttu&g_ep=EgoyMDI0MTIxMS4wIKXMDSoASAFQAw%3D%3D",
       "status": "past",
-      "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/13.jpg"
+      "image_link": "/image/res4.jpg"
     },
     {
       "id":5,
@@ -64,7 +64,7 @@ const events = [
       "address": "Pier 7, Dubai Marina",
       "maps_link": "https://www.google.com/maps/place/Atelier+M/@25.0762468,55.1363481,899m/data=!3m3!1e3!4b1!5s0x3e5f6cab2893a281:0xa193d005d6c237e4!4m6!3m5!1s0x3e5f6caae908e705:0xba86396d7a4d84e9!8m2!3d25.0762468!4d55.138923!16s%2Fg%2F11b7tgygys?entry=ttu&g_ep=EgoyMDI0MTIxMS4wIKXMDSoASAFQAw%3D%3D",
       "status": "past",
-      "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/14.jpg"
+      "image_link": "/image/res5.jpeg"
     },
     {
       "id":6,
@@ -77,7 +77,7 @@ const events = [
       "address": "V Hotel, Dubai",
       "maps_link": "https://www.google.com/maps/place/One1+Dubai/@25.1842241,55.2518501,898m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3e5f69ab08620f67:0x2e34975541fe1796!8m2!3d25.1842241!4d55.254425!16s%2Fg%2F11tnvwl8kv?entry=ttu&g_ep=EgoyMDI0MTIxMS4wIKXMDSoASAFQAw%3D%3D",
       "status": "past",
-      "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/15.jpg"
+      "image_link": "/image/res6.jpeg"
     },
     {
       "id":7,
@@ -90,7 +90,7 @@ const events = [
       "address": "Pier 7, Dubai Marina",
       "maps_link": "https://www.google.com/maps/place/Atelier+M/@25.0762468,55.1363481,899m/data=!3m3!1e3!4b1!5s0x3e5f6cab2893a281:0xa193d005d6c237e4!4m6!3m5!1s0x3e5f6caae908e705:0xba86396d7a4d84e9!8m2!3d25.0762468!4d55.138923!16s%2Fg%2F11b7tgygys?entry=ttu&g_ep=EgoyMDI0MTIxMS4wIKXMDSoASAFQAw%3D%3D",
       "status": "upcoming",
-      "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/16.jpg"
+      "image_link": "/image/res7.jpeg"
     },
     {
       "id":8,
@@ -103,7 +103,7 @@ const events = [
       "address": "V Hotel, Dubai",
       "maps_link": "https://www.google.com/maps/place/One1+Dubai/@25.1842241,55.2518501,898m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3e5f69ab08620f67:0x2e34975541fe1796!8m2!3d25.1842241!4d55.254425!16s%2Fg%2F11tnvwl8kv?entry=ttu&g_ep=EgoyMDI0MTIxMS4wIKXMDSoASAFQAw%3D%3D",
       "status": "upcoming",
-      "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/17.jpg"
+      "image_link": "/image/res8.jpeg"
     },
     {
       "id":9,
@@ -116,7 +116,7 @@ const events = [
       "address": "Pier 7, Dubai Marina",
       "maps_link": "https://www.google.com/maps/place/Atelier+M/@25.0762468,55.1363481,899m/data=!3m3!1e3!4b1!5s0x3e5f6cab2893a281:0xa193d005d6c237e4!4m6!3m5!1s0x3e5f6caae908e705:0xba86396d7a4d84e9!8m2!3d25.0762468!4d55.138923!16s%2Fg%2F11b7tgygys?entry=ttu&g_ep=EgoyMDI0MTIxMS4wIKXMDSoASAFQAw%3D%3D",
       "status": "upcoming",
-      "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/21.jpg"
+      "image_link": "/image/res9.jpeg"
     },
     {
       "id":10,
@@ -129,7 +129,7 @@ const events = [
       "address": "V Hotel, Dubai",
       "maps_link": "https://www.google.com/maps/place/One1+Dubai/@25.1842241,55.2518501,898m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3e5f69ab08620f67:0x2e34975541fe1796!8m2!3d25.1842241!4d55.254425!16s%2Fg%2F11tnvwl8kv?entry=ttu&g_ep=EgoyMDI0MTIxMS4wIKXMDSoASAFQAw%3D%3D",
       "status": "upcoming",
-      "image_link": "https://nyohqvbavyqynzaooxyj.supabase.co/storage/v1/object/public/assests/aks/19.jpg"
+      "image_link": "/image/res10.avif"
     },
   ];
   export async function GET(request :NextRequest) {

@@ -171,7 +171,7 @@ const DetailsPage = () => {
         {/* Image Section */}
         <div className="relative rounded-xl overflow-hidden mb-6 shadow-sm">
           <Image
-            src="/details.jpg"
+            src={data.image_link}
             alt={title}
             width={1200}
             height={600}
