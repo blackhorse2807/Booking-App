@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FiMenu, FiSearch, FiBell, FiCalendar, FiMapPin, FiClock, FiStar } from "react-icons/fi";
+import { FiMenu, FiSearch, FiBell, FiMapPin, FiClock, FiStar } from "react-icons/fi";
 import { FaBell } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";

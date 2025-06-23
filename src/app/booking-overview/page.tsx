@@ -6,7 +6,6 @@ import jsPDF from "jspdf";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FiDownload, FiHome, FiCalendar, FiClock, FiUser, FiHash, FiCheck } from "react-icons/fi";
-import Image from "next/image";
 
 const BookingOverview = () => {
   const searchParams = useSearchParams();
